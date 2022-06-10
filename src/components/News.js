@@ -8,15 +8,15 @@ export default class News extends Component {
   static defaultProps = {
     country: "in",
     pageSize: "6",
-    category:"general"
+    category: "general"
   }
 
-  static ppropTypes = {
+  static propTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string
   }
-  
+
   constructor() {
     super();
     this.state = {
@@ -28,8 +28,9 @@ export default class News extends Component {
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
   }
-  async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5ea39234f8a04561ba3d762dd516948a&page=1&pageSize=${this.props.pageSize}`;
+
+  updateNews = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d73a22ac34ff4fbd943c05b73fb12a0e&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true })
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -37,35 +38,42 @@ export default class News extends Component {
       articles: parsedData.articles, totalResults: parsedData.totalResults
       , loading: false
     })
-    console.log(parsedData);
   }
 
-  async handlePreviousClick () {
+  async componentDidMount() {
+    await this.updateNews();
+  }
 
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5ea39234f8a04561ba3d762dd516948a&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles, loading: false });
-    console.log(parsedData);
+  async handlePreviousClick() {
 
-    this.setState({
-      page: this.state.page - 1
-    })
+    // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d73a22ac34ff4fbd943c05b73fb12a0e&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+    // this.setState({ loading: true });
+    // let data = await fetch(url);
+    // let parsedData = await data.json();
+    // this.setState({ articles: parsedData.articles, loading: false });
+    // console.log(parsedData);
+
+    // this.setState({
+    //   page: this.state.page - 1
+    // })
+    await this.setState({ page: this.state.page - 1 });
+    this.updateNews();
     console.log("previous");
   }
 
   async handleNextClick() {
 
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=5ea39234f8a04561ba3d762dd516948a&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({ articles: parsedData.articles, loading: false });
+    // let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=d73a22ac34ff4fbd943c05b73fb12a0e&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+    // this.setState({ loading: true });
+    // let data = await fetch(url);
+    // let parsedData = await data.json();
+    // this.setState({ articles: parsedData.articles, loading: false });
 
-    this.setState({
-      page: this.state.page + 1
-    })
+    // this.setState({
+    //   page: this.state.page + 1
+    // })
+    await this.setState({ page: this.state.page + 1 });
+    this.updateNews();
     console.log("next");
   }
 
@@ -84,7 +92,7 @@ export default class News extends Component {
           <div className="row">
             {!this.state.loading && this.state.articles.map((element) => {
               return <div key={element.url} className="col-md-4">
-                <Newsitem title={element.title ? trimLength(element.title, 55) + "..." : ""} description={element.description ? trimLength(element.description, 200) + "..." : ""} imageUrl={element.urlToImage} newsUrl={element.url} />
+                <Newsitem title={element.title ? trimLength(element.title, 55) + "..." : ""} description={element.description ? trimLength(element.description, 200) + "..." : ""} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} time={element.publishedAt} />
               </div>
             })}
 
