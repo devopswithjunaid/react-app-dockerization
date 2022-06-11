@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 export default class Newsitem extends Component {
 
     render() {
@@ -11,7 +12,7 @@ export default class Newsitem extends Component {
                     <div className="card-body" style={{ overflow: "hidden" }}>
                         <h5 className="card-title">{title}</h5>
                         <p className="card-text">{description}</p>
-                        <p className="card-text"><small className="text-muted">Updated {!author ? "" : `By ${author}` } On {new Date(time).toGMTString()} </small></p>
+                        <p className="card-text"><small className="text-muted">Updated {!author ? "" : `By ${author}`} On {new Date(time).toGMTString()} </small></p>
                         <a href={newsUrl} rel="noreferrer" target="__blank" className="btn btn-dark btn-sm">Read More</a>
                     </div>
                 </div>
