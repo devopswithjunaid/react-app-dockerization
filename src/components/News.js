@@ -69,7 +69,7 @@ const News = (props) => {
   //return statement of News function
   return (
     <>
-      <div className='container my-3'>
+      <div className='container' style={{marginTop:"5rem"}}>
         <h1 className="text-center">NewsToday - {props.category !== "general" ? capitalizeFirstLetter(props.category) + " Headlines" : "Home"}</h1>
         {loading && <Spinner />}
 
