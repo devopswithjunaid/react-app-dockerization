@@ -1,21 +1,22 @@
 import React from 'react'
+import NoImage from '../No-Preview-Available.jpg'
 
-function Newsitem(props) {
-    let { title, description, imageUrl, newsUrl, author, time }  = props;
+const Newsitem = (props) => {
+
+    let { title, description, imageUrl, newsUrl, author, time } = props;
     return (
-    <div className='my-3'>
-        <div className="card" style={{ width: '90%', margin: 'auto' }}>
-            <img src={imageUrl} className="card-img-top" style={{ width: '100%' }} alt="..." />
-            <div className="card-body" style={{ overflow: "hidden" }}>
-                <h5 className="card-title">{title}</h5>
-                <p className="card-text">{description}</p>
-                <p className="card-text"><small className="text-muted">Updated {!author ? "" : `By ${author}`} On {new Date(time).toGMTString()} </small></p>
-                <a href={newsUrl} rel="noreferrer" target="__blank" className="btn btn-dark btn-sm">Read More</a>
+        <div className='my-3'>
+            <div className="card">
+                <img src={imageUrl ? imageUrl : NoImage} className="card-img-top" alt="..." />
+                <div className="card-body">
+                    <h5 className="card-title">{title}</h5>
+                    <p className="card-text">{description}</p>
+                    <p className="card-text"><small className="text-muted">By {author ? author : "Unknown"} on {time ? new Date(time).toGMTString() : "Unknown"}</small></p>
+                    <a href={newsUrl} target="_blank" rel="noreferrer" className="btn btn-sm btn-dark">Read More</a>
+                </div>
             </div>
         </div>
-    </div>
-
-  )
+    )
 }
 
 export default Newsitem
